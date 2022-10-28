@@ -27,4 +27,12 @@ RUN apt-get install -y \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN usermod -u 1000 www-data
+ARG UID=1000
+ARG GID=1000
+ENV UID=${UID}
+ENV GID=${GID}
+ENV USER_NAME="bitrix"
+
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh"]
